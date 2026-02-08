@@ -14,13 +14,33 @@
             overflow-x: hidden;
         }
 
-        /* Half Page Picture */
+        /* Half Page Picture Section */
         .hero-section {
             width: 100%;
             height: 50vh;
-            background: url('./megha.jpg') center/cover no-repeat;
+            /* Using the absolute URL to ensure the photo loads */
+            background: url('https://khageshrj-coder.github.io/Valentine/megha.jpg') center/cover no-repeat;
             position: relative;
             border-bottom: 8px solid #a4133c;
+            background-color: #ffe5ec; /* Pink fallback color */
+            overflow: hidden;
+        }
+
+        /* Falling Rose Petals CSS */
+        .petal {
+            position: absolute;
+            background-color: #ff4d6d;
+            border-radius: 150% 0 150% 0;
+            opacity: 0.8;
+            pointer-events: none;
+            z-index: 50;
+            animation: fall linear forwards;
+        }
+
+        @keyframes fall {
+            0% { transform: translateY(-10vh) rotate(0deg); opacity: 0; }
+            10% { opacity: 1; }
+            100% { transform: translateY(55vh) rotate(360deg); opacity: 0; }
         }
 
         /* Timer on Top Right */
@@ -29,18 +49,23 @@
             top: 20px;
             right: 20px;
             background: rgba(164, 19, 60, 0.9);
-            color: white;
+            color: #ffffff;
             padding: 12px 20px;
             border-radius: 15px;
             font-size: 0.9rem;
             backdrop-filter: blur(8px);
             z-index: 100;
             text-align: center;
-            border: 1px solid #ffb3c1;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+            border: 2px solid #ffffff;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.3);
         }
 
-        .timer-top-right span { display: block; font-weight: bold; font-size: 1.4rem; color: #ffccd5; }
+        .timer-top-right span { 
+            display: block; 
+            font-weight: bold; 
+            font-size: 1.4rem; 
+            color: #ffffff;
+        }
 
         .content {
             padding: 40px 20px;
@@ -125,7 +150,7 @@
 </head>
 <body>
 
-    <div class="hero-section">
+    <div class="hero-section" id="hero">
         <div class="timer-top-right">
             Bali Countdown
             <span id="countdown">Loading...</span>
@@ -149,7 +174,7 @@
         </div>
 
         <div id="successArea">
-            <h1>You Are My Valentine ! 😍</h1>
+            <h1>My Valentine, I will rock your world! 😍</h1>
             <p style="color: #a4133c;">I can't wait to see you.</p>
             
             <video id="myVideo" controls playsinline>
@@ -162,6 +187,7 @@
     </div>
 
     <script>
+        // 1. Bali Countdown Logic
         function updateTimer() {
             const target = new Date("February 13, 2026 15:00:00 GMT+0800").getTime();
             const now = new Date().getTime();
@@ -178,9 +204,30 @@
             
             document.getElementById('countdown').innerHTML = d + "d " + h + "h " + m + "m";
         }
-        setInterval(updateTimer, 60000);
+        setInterval(updateTimer, 1000);
         updateTimer();
 
+        // 2. Falling Rose Petals Logic
+        function createPetal() {
+            const hero = document.getElementById('hero');
+            const petal = document.createElement('div');
+            petal.className = 'petal';
+            
+            const startX = Math.random() * 100;
+            const size = Math.random() * 15 + 10;
+            const duration = Math.random() * 3 + 4;
+
+            petal.style.left = startX + 'vw';
+            petal.style.width = size + 'px';
+            petal.style.height = size + 'px';
+            petal.style.animationDuration = duration + 's';
+
+            hero.appendChild(petal);
+            setTimeout(() => { petal.remove(); }, duration * 1000);
+        }
+        setInterval(createPetal, 300);
+
+        // 3. Button Interaction
         function move() {
             const btn = document.getElementById('noBtn');
             const x = Math.random() * (window.innerWidth - btn.offsetWidth);
@@ -189,6 +236,7 @@
             btn.style.top = y + 'px';
         }
 
+        // 4. Celebration Logic
         function celebrate() {
             document.getElementById('questionArea').style.display = 'none';
             document.getElementById('successArea').style.display = 'block';
