@@ -34,10 +34,39 @@
         .apology-box { max-width: 600px; margin: 25px auto; font-family: 'Playfair Display', serif; font-style: italic; color: #590d22; background: #ffe5ec; padding: 25px; border-left: 8px solid #a4133c; border-radius: 0 20px 20px 0; }
 
         /* Button Container Fix */
-        .btn-container { margin-top: 30px; height: 150px; position: relative; width: 100%; display: flex; justify-content: center; align-items: center; }
-        button { padding: 15px 45px; font-size: 1.3rem; border-radius: 50px; border: none; cursor: pointer; font-weight: bold; transition: 0.3s; }
-        #yesBtn { background: #a4133c; color: white; z-index: 1000; }
-        #noBtn { background: #888; color: white; position: absolute; z-index: 999; }
+.btn-container { 
+            margin-top: 50px; 
+            height: 150px; 
+            display: flex; 
+            justify-content: center; 
+            align-items: center; 
+            gap: 20px;
+            position: relative;
+        }
+
+        button { 
+            padding: 15px 45px; 
+            font-size: 1.3rem; 
+            border-radius: 50px; 
+            border: none; 
+            cursor: pointer; 
+            font-weight: bold; 
+            transition: 0.2s; 
+        }
+
+        #yesBtn { 
+            background: #a4133c; 
+            color: white; 
+            z-index: 100; 
+            position: relative;
+        }
+
+        #noBtn { 
+            background: #888; 
+            color: white; 
+            z-index: 101; 
+            position: absolute; 
+        }
 
         #successArea { display: none; padding: 20px; }
         video { width: 100%; max-width: 450px; border-radius: 20px; border: 8px solid white; box-shadow: 0 15px 40px rgba(0,0,0,0.3); margin-top: 25px; }
@@ -55,9 +84,9 @@
             <div class="apology-box">"Honey, I am so sorry about yesterday... Please accept this digital garden as my promise to make it up to you."</div>
             <p><strong>Will you be my Valentine?</strong></p>
 
-            <div class="btn-container">
+    <div class="btn-container">
                 <button id="yesBtn" onclick="celebrate()">YES!</button>
-                <button id="noBtn" onmouseover="move()" ontouchstart="move()">No</button>
+                <button id="noBtn" onmouseover="move()" ontouchstart="move()" onclick="move()">No</button>
             </div>
         </div>
 
@@ -100,16 +129,16 @@
         // 3. THE MOVE LOGIC (UPDATED)
         function move() {
             const btn = document.getElementById('noBtn');
-            const container = document.querySelector('.btn-container');
             
-            // Generate random positions within the visible window
-            const maxX = window.innerWidth - btn.offsetWidth;
-            const maxY = window.innerHeight - btn.offsetHeight;
+            // This math keeps the button inside the visible screen
+            const padding = 100;
+            const maxX = window.innerWidth - btn.offsetWidth - padding;
+            const maxY = window.innerHeight - btn.offsetHeight - padding;
             
-            const newX = Math.random() * maxX;
-            const newY = Math.random() * maxY;
+            const newX = Math.random() * maxX + (padding / 2);
+            const newY = Math.random() * maxY + (padding / 2);
 
-            btn.style.position = 'fixed'; // Switch to fixed so it can jump anywhere on screen
+            btn.style.position = 'fixed'; // Use fixed so it jumps across the whole screen
             btn.style.left = newX + 'px';
             btn.style.top = newY + 'px';
         }
