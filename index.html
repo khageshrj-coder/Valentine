@@ -9,7 +9,6 @@
     <style>
         body { background-color: #fff0f3; font-family: 'Segoe UI', sans-serif; margin: 0; overflow-x: hidden; }
 
-        /* Half Page Picture */
         .hero-section {
             width: 100%;
             height: 50vh;
@@ -22,7 +21,6 @@
             overflow: hidden;
         }
 
-        /* Falling Roses */
         .petal { position: absolute; background-color: #ff4d6d; border-radius: 150% 0 150% 0; opacity: 0.8; z-index: 50; animation: fall linear forwards; }
         @keyframes fall { 0% { transform: translateY(-10vh) rotate(0deg); opacity: 0; } 10% { opacity: 1; } 100% { transform: translateY(55vh) rotate(360deg); opacity: 0; } }
 
@@ -34,15 +32,16 @@
         h2 { font-family: 'Dancing Script', cursive; color: #a4133c; font-size: 2.2rem; line-height: 1.2; margin: 10px 0; }
         .apology-box { max-width: 600px; margin: 25px auto; font-family: 'Playfair Display', serif; font-style: italic; color: #590d22; background: #ffe5ec; padding: 25px; border-left: 8px solid #a4133c; border-radius: 0 20px 20px 0; }
 
-        /* Button Container Fix */
+        /* FIXED BUTTON LAYOUT */
         .btn-container { 
             margin-top: 50px; 
-            height: 150px; 
+            height: 100px; 
             display: flex; 
             justify-content: center; 
             align-items: center; 
-            gap: 20px;
+            gap: 40px; /* Space between Yes and No */
             position: relative;
+            width: 100%;
         }
 
         button { 
@@ -52,21 +51,20 @@
             border: none; 
             cursor: pointer; 
             font-weight: bold; 
-            transition: 0.2s; 
+            transition: transform 0.2s ease; 
         }
 
         #yesBtn { 
             background: #a4133c; 
             color: white; 
-            z-index: 100; 
-            position: relative;
+            z-index: 10; 
         }
 
         #noBtn { 
             background: #888; 
             color: white; 
-            z-index: 101; 
-            position: absolute; 
+            z-index: 20;
+            /* No absolute positioning at first so it stays in the flex layout */
         }
 
         #successArea { display: none; padding: 20px; }
@@ -87,7 +85,7 @@
 
             <div class="btn-container">
                 <button id="yesBtn" onclick="celebrate()">YES!</button>
-                <button id="noBtn" onmouseover="move()" ontouchstart="move()" onclick="move()">No</button>
+                <button id="noBtn" onmouseover="move()" ontouchstart="move()">No</button>
             </div>
         </div>
 
@@ -99,7 +97,6 @@
     </div>
 
     <script>
-        // 1. Countdown
         function updateTimer() {
             const target = new Date("February 13, 2026 15:00:00 GMT+0800").getTime();
             const now = new Date().getTime();
@@ -111,7 +108,6 @@
         }
         setInterval(updateTimer, 1000); updateTimer();
 
-        // 2. Roses
         function createPetal() {
             const hero = document.getElementById('hero');
             const petal = document.createElement('div');
@@ -127,21 +123,24 @@
         }
         setInterval(createPetal, 300);
 
-        // 3. THE MOVE LOGIC
+        // IMPROVED MOVE LOGIC
         function move() {
             const btn = document.getElementById('noBtn');
+            
+            // Switch to fixed positioning only when it starts moving
+            btn.style.position = 'fixed'; 
+            
             const padding = 100;
             const maxX = window.innerWidth - btn.offsetWidth - padding;
             const maxY = window.innerHeight - btn.offsetHeight - padding;
+            
             const newX = Math.random() * maxX + (padding / 2);
             const newY = Math.random() * maxY + (padding / 2);
 
-            btn.style.position = 'fixed';
             btn.style.left = newX + 'px';
             btn.style.top = newY + 'px';
         }
 
-        // 4. Celebration
         function celebrate() {
             document.getElementById('questionArea').style.display = 'none';
             document.getElementById('successArea').style.display = 'block';
