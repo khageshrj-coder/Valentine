@@ -31,10 +31,11 @@
 
         .content { padding: 40px 20px; text-align: center; }
         h1 { font-family: 'Dancing Script', cursive; color: #a4133c; font-size: 3.5rem; margin: 0; }
+        h2 { font-family: 'Dancing Script', cursive; color: #a4133c; font-size: 2.2rem; line-height: 1.2; margin: 10px 0; }
         .apology-box { max-width: 600px; margin: 25px auto; font-family: 'Playfair Display', serif; font-style: italic; color: #590d22; background: #ffe5ec; padding: 25px; border-left: 8px solid #a4133c; border-radius: 0 20px 20px 0; }
 
         /* Button Container Fix */
-.btn-container { 
+        .btn-container { 
             margin-top: 50px; 
             height: 150px; 
             display: flex; 
@@ -84,14 +85,14 @@
             <div class="apology-box">"Honey, I am so sorry about yesterday... Please accept this digital garden as my promise to make it up to you."</div>
             <p><strong>Will you be my Valentine?</strong></p>
 
-    <div class="btn-container">
+            <div class="btn-container">
                 <button id="yesBtn" onclick="celebrate()">YES!</button>
                 <button id="noBtn" onmouseover="move()" ontouchstart="move()" onclick="move()">No</button>
             </div>
         </div>
 
         <div id="successArea">
-            <h1>I Love You! 😍</h1>
+            <h2>You are the best thing that’s ever happened to me. 😍</h2>
             <video id="myVideo" controls playsinline><source src="our-video.mp4" type="video/mp4"></video>
             <div style="font-size: 1.6rem; margin-top:20px; color:#a4133c;">See you in Bali! ✈️</div>
         </div>
@@ -126,19 +127,16 @@
         }
         setInterval(createPetal, 300);
 
-        // 3. THE MOVE LOGIC (UPDATED)
+        // 3. THE MOVE LOGIC
         function move() {
             const btn = document.getElementById('noBtn');
-            
-            // This math keeps the button inside the visible screen
             const padding = 100;
             const maxX = window.innerWidth - btn.offsetWidth - padding;
             const maxY = window.innerHeight - btn.offsetHeight - padding;
-            
             const newX = Math.random() * maxX + (padding / 2);
             const newY = Math.random() * maxY + (padding / 2);
 
-            btn.style.position = 'fixed'; // Use fixed so it jumps across the whole screen
+            btn.style.position = 'fixed';
             btn.style.left = newX + 'px';
             btn.style.top = newY + 'px';
         }
